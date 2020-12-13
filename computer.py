@@ -1,4 +1,5 @@
 import sys
+import re
 
 def checkExpression(expression):
 	reg = re.compile('[0-9X\s\^\-\+\*\=\.\/]+$')
@@ -13,6 +14,35 @@ def checkExpression(expression):
 		print('Eh buddy the Polynome is not well formatted.')
 		return False
 	return True
+
+def printReduceForm(equation):
+
+	reducedForm, polySup, polyMax = '', False, 0
+
+	polVec = sorted(list(equation.keys()))
+	for k in polVec:
+		if int(k) > polyMax:
+			polyMax = int(k)
+
+		if equation[k] != 0:
+			value = int(equation[k]) if equation[k] % int(equation[k]) == 0 else equation[k]
+			if equation[k] < 0:
+				reducedForm += ' - ' if polySup else '-'
+			elif polySup:
+				reducedForm += ' + '
+			if int(k) > 1:
+				reducedForm += str(abs(value)) + ' * X^' + str(k) if value != 1 else 'X^' + k
+				polySup = True
+			elif int(k) == 1:
+				reducedForm += str(abs(value)) + ' * X' if value != 1 else 'X'
+				polySup = True
+			else:
+				reducedForm += str(abs(value))
+				polySup = True
+
+	if len(reducedForm) > 0:
+		print('Reduced From : ' + reducedForm + ' = 0')
+	return polyMax
 
 def checkSubElement(element, sign):
 	result = dict()
@@ -77,7 +107,7 @@ def computer(equation):
 		'solution': True,
 		'solution2': None,
 		'discriminant' : None,
-		'polMax': 0
+		'polyMax': 0
 	}
 
 	if not checkExpression(equation):
@@ -127,15 +157,15 @@ def computer(equation):
 			else:
 				equationDict[str(element['polynome'])] += element['denominateur']
 
-	result['polMax'] = printReduceForm(equationDict)
-	if result['polMax'] > 2:
-		print('Polynomial Degree : {}\nThe polynomial degree is stricly greater than 2, I can\'t solve.'.format(result['polMax']))
+	result['polyMax'] = printReduceForm(equationDict)
+	if result['polyMax'] > 2:
+		print('Polynomial Degree : {}\nThe polynomial degree is stricly greater than 2, I can\'t solve.'.format(result['polyMax']))
 		result['solution'] = False
 		return result
 
 	# Check if all polynome are in the equation
-	if len(equationDict) < result['polMax'] + 1:
-		for i in range(0, result['polMax'] + 1):
+	if len(equationDict) < result['polyMax'] + 1:
+		for i in range(0, result['polyMax'] + 1):
 			if str(i) not in equationDict:
 				equationDict[str(i)] = 0
 

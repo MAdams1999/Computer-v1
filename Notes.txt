@@ -1,0 +1,28 @@
+In the Following Polynomial Equation 
+	" 42 * X^0 = 42 * X^0"
+	The means "X^0" means "X(undifined) to the power of 0"
+
+Syntax of Functions in Python
+The keyword "def" marks the start of the function header.
+A Function identifier in Python basically
+
+The "reduce(fun,seq) function is used to apply a particular function passed in
+it's argument to all of the list elements mentioned in the sequence passed along.
+
+		also if "re" is'nt imported the check Equations wont
+				work in other words the code wont run
+					and I'm an idiot
+
+import re
+Regular expressions or RegEx in Python is denoted as RE such as RE's regexes or rexe
+are all imported through the re module.
+
+Basically it's a library that makes use of the Regular expressions
+		
+
+
+
+
+
+		PS my coding very sloppy and it might have alot
+				of errors...
